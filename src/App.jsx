@@ -1,7 +1,8 @@
 import React from 'react'
+import DataSet from './DataSet'
 
 const App = () => (
-  <h1>Minimal React</h1>  
+  <DataSet></DataSet>
 )
 
 export default App
