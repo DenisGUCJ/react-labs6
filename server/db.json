@@ -151,14 +151,6 @@
       "name": "Rosanna Newman",
       "company": "EXIAND",
       "email": "rosannanewman@exiand.com"
-    },
-    {
-      "isActive": true,
-      "age": 23,
-      "name": "Denis",
-      "company": "SAS.CORP",
-      "email": "denis.mail@soska.com",
-      "id": "76f2xr9"
     }
   ]
 }

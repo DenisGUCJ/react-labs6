@@ -1,6 +1,7 @@
 import React from 'react'
 import EmployeeList from './EmployeeList';
 import AddEmployee from './AddEmployee'
+import DeleteEmployee from './DeleteEmployee';
 
 class DataSet extends React.Component{
 
@@ -10,11 +11,14 @@ class DataSet extends React.Component{
       employees:[],
       isLoading:true,
       isSaving:false,
-      addEvent:false
+      isDeleting:false,
+      addEvent:false,
+      deleteEvent:false
     }
 
     this.onClickAddButton=this.onClickAddButton.bind(this);
     this.onClickResetButton=this.onClickResetButton.bind(this);
+    this.onClickDeleteButton=this.onClickDeleteButton.bind(this); 
   }
 
   componentDidMount(){
@@ -28,13 +32,15 @@ class DataSet extends React.Component{
     })));
   }
 
-  updateDataSet(){
-    
-  }
-
   onClickAddButton(){
     this.setState((prevState)=>({
       addEvent:!prevState.addEvent
+    }));
+  }
+
+  onClickDeleteButton(){
+    this.setState((prevState)=>({
+      deleteEvent:!prevState.deleteEvent
     }));
   }
 
@@ -43,9 +49,10 @@ class DataSet extends React.Component{
   }
 
   onClickCancelButton=()=>{
-    this.setState((prevState)=>({
-      addEvent:!prevState.addEvent
-    }));
+    this.setState({
+      addEvent:false,
+      deleteEvent:false
+    });
   }
 
   onClickSubmitButton=(event)=>{
@@ -74,35 +81,58 @@ class DataSet extends React.Component{
     event.preventDefault();
   }
 
+  onClickSubmitDeleteButton=(event)=>{
+    this.setState((prevState)=>({
+      deleteEvent:!prevState.deleteEvent,
+      isDeleting:!prevState.isSaving
+    }));
+
+    const data = new FormData(event.target);
+    fetch('http://localhost:3004/employees/'+data.get("id"), {
+        method: 'DELETE',})
+        .then(response => response.json())
+        .then(()=>this.setState((prevState)=>({isDeleting:!prevState.isDeleting})))
+        .then(()=>this.componentDidMount());
+    
+    event.preventDefault();
+  }
+
   render(){
     if(this.state.isLoading){
       return <h1>Loading...</h1>
     }
     if(this.state.isSaving){
-      return <h1>isSaving...</h1>
+      return <h1>Saving...</h1>
     }
-    if(!this.state.addEvent){
-      if(this.state.employees.length>0){
-        return <div>
-          <h1>The Employee list:</h1>
-          <button onClick={this.onClickAddButton}>Add Employee</button>
-          <EmployeeList employee={this.state.employees}></EmployeeList>
-        </div> 
-      }
-      else{
-        return <div>
-          <h1>Date set is empty!</h1>
-          <button onClick={this.onClickAddButton}>Add Employee</button>
-        </div>
-      }
+    if(this.state.isDeleting){
+      return <h1>Deleting...</h1>
     }
-    else{
+    if(this.state.addEvent){
       return <AddEmployee reset={this.onClickResetButton} 
       submit={this.onClickSubmitButton}
       cancel={this.onClickCancelButton}></AddEmployee>
-      
+    }
+    if(this.state.deleteEvent){
+      return <DeleteEmployee cancel={this.onClickCancelButton}
+      submit={this.onClickSubmitDeleteButton}></DeleteEmployee>
+    }
+    if(this.state.employees.length>0){
+      return <div>
+        <h1>The Employee list:</h1>
+        <button onClick={this.onClickAddButton}>Add Employee</button>
+        <button onClick={this.onClickDeleteButton}>Delete Employee</button>
+        <EmployeeList employee={this.state.employees} delete={this.onClickInnerDeleteButton}></EmployeeList>
+      </div> 
+    }
+    else{
+      return <div>
+        <h1>Date set is empty!</h1>
+        <button onClick={this.onClickAddButton}>Add Employee</button>
+      </div>
     }
   } 
 }
 
 export default DataSet
+
+

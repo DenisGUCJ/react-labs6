@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 const EmployeeList = (props) =>{
     
     const employeeList = props.employee.map(data => 
@@ -10,7 +9,8 @@ const EmployeeList = (props) =>{
             <div>
                 {employeeList}
             </div>
-        )        
+        )
+
 }
 
 const Employee = (props) =>{
@@ -23,7 +23,7 @@ const Employee = (props) =>{
                 <p>Age: {props.data.age}</p>
                 <p>Name: {props.data.name}</p>               
                 <p>Company: {props.data.company}</p>                
-                <p>Email: {props.data.email}</p>                
+                <p>Email: {props.data.email}</p>               
             </div>
         </div>        
     )
