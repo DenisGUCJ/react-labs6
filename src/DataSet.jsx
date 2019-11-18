@@ -9,6 +9,7 @@ class DataSet extends React.Component{
     this.state={
       employees:[],
       isLoading:true,
+      isSaving:false,
       addEvent:false
     }
 
@@ -22,9 +23,13 @@ class DataSet extends React.Component{
     .then(data=>this.setState({
       employees:data
     }))
-    .then(()=>this.setState((prevState)=>({
-      isLoading:!prevState.isLoading
+    .then(()=>this.setState(({
+      isLoading:false
     })));
+  }
+
+  updateDataSet(){
+    
   }
 
   onClickAddButton(){
@@ -37,7 +42,7 @@ class DataSet extends React.Component{
     event.preventDefault();
   }
 
-  onClickCancelButton=(event)=>{
+  onClickCancelButton=()=>{
     this.setState((prevState)=>({
       addEvent:!prevState.addEvent
     }));
@@ -45,14 +50,36 @@ class DataSet extends React.Component{
 
   onClickSubmitButton=(event)=>{
     this.setState((prevState)=>({
-      addEvent:!prevState.addEvent
+      addEvent:!prevState.addEvent,
+      isSaving:!prevState.isSaving
     }));
+
+    const data = new FormData(event.target);
+    fetch('http://localhost:3004/employees', {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            isActive: data.get("isActive")=="true" ? true : false,
+            age: Number(data.get("age")),
+            name: data.get("name"),
+            company: data.get("company"),
+            email: data.get("email")
+          })
+        })
+          .then(response => response.json())
+          .then(() => this.setState((prevState)=>({isSaving:!prevState.isSaving})))
+          .then(() => this.componentDidMount());
+          
+
     event.preventDefault();
   }
 
   render(){
     if(this.state.isLoading){
       return <h1>Loading...</h1>
+    }
+    if(this.state.isSaving){
+      return <h1>isSaving...</h1>
     }
     if(!this.state.addEvent){
       if(this.state.employees.length>0){

@@ -13,7 +13,7 @@ const EmployeeList = (props) =>{
         )        
 }
 
-const Employee = (props) => {
+const Employee = (props) =>{
 
     return(
         <div>
