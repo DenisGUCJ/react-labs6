@@ -1,5 +1,9 @@
 import React from 'react'
 
+import {
+    Link
+  } from "react-router-dom";
+
 class PageEmployee extends React.Component{
 
     constructor(props){
@@ -88,6 +92,11 @@ class PageEmployee extends React.Component{
             <div>
                 <button style={{border:'2px solid', padding : '10px', margin : 10}} onClick={this.onClickAdd}>Add Employee</button>
             </div>}  
+        <div>
+            <Link to="/">
+                <button style={{border:'2px solid', padding : '10px', margin : 10}} onClick={()=>this.props.history.push("/")}>Back to List</button>
+            </Link>   
+        </div>
     </div>
     }
 }

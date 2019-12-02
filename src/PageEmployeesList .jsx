@@ -1,7 +1,10 @@
 import React from 'react'
 import EmployeeList from './EmployeeList';
-import PageEmployee from './PageEmployee'
 import DeleteEmployee from './DeleteEmployee';
+
+import {
+  Link
+} from "react-router-dom";
 
 class PageEmployeesList  extends React.Component{
 
@@ -72,7 +75,10 @@ class PageEmployeesList  extends React.Component{
     if(this.state.employees.length>0){
       return <div>
         <h1>The Employee list:</h1>
-        <button onClick={this.onClickDeleteButton}>Delete Employee</button>
+        <Link to="/new">
+          <button style={{border:'2px solid', padding : '10px', margin : 10}} onClick={()=>this.props.history.push("/new")}>Create new employee</button>
+        </Link>
+        <button style={{border:'2px solid', padding : '10px', margin : 10}} onClick={this.onClickDeleteButton}>Delete Employee</button>
         <EmployeeList employee={this.state.employees} delete={this.onClickInnerDeleteButton}></EmployeeList>
       </div> 
     }
