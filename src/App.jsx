@@ -1,9 +1,9 @@
 import React from 'react'
-import DataSet from './DataSet'
-import AddEmployee from './AddEmployee'
+import PageEmployeesList from './PageEmployeesList '
+import PageEmployee from './PageEmployee'
 
 const App = () => (
-  <DataSet></DataSet>
+  <PageEmployeesList></PageEmployeesList>
 )
 
 export default App

@@ -1,9 +1,9 @@
 import React from 'react'
 import EmployeeList from './EmployeeList';
-import AddEmployee from './AddEmployee'
+import PageEmployee from './PageEmployee'
 import DeleteEmployee from './DeleteEmployee';
 
-class DataSet extends React.Component{
+class PageEmployeesList  extends React.Component{
 
   constructor(props){
     super(props);
@@ -108,9 +108,9 @@ class DataSet extends React.Component{
       return <h1>Deleting...</h1>
     }
     if(this.state.addEvent){
-      return <AddEmployee reset={this.onClickResetButton} 
+      return <PageEmployee reset={this.onClickResetButton} 
       submit={this.onClickSubmitButton}
-      cancel={this.onClickCancelButton}></AddEmployee>
+      cancel={this.onClickCancelButton}></PageEmployee>
     }
     if(this.state.deleteEvent){
       return <DeleteEmployee cancel={this.onClickCancelButton}
@@ -133,6 +133,6 @@ class DataSet extends React.Component{
   } 
 }
 
-export default DataSet
+export default PageEmployeesList
 
 
