@@ -3,7 +3,8 @@ import EmployeeList from './EmployeeList';
 import DeleteEmployee from './DeleteEmployee';
 
 import {
-  Link
+  Link,
+  withRouter
 } from "react-router-dom";
 
 class PageEmployeesList  extends React.Component{
@@ -13,7 +14,6 @@ class PageEmployeesList  extends React.Component{
     this.state={
       employees:[],
       isLoading:true,
-      isSaving:false,
       isDeleting:false,
       deleteEvent:false
     }
@@ -90,6 +90,6 @@ class PageEmployeesList  extends React.Component{
   } 
 }
 
-export default PageEmployeesList
+export default withRouter(PageEmployeesList)
 
 

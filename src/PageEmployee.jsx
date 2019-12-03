@@ -1,7 +1,8 @@
 import React from 'react'
 
 import {
-    Link
+    Link,
+    withRouter
   } from "react-router-dom";
 
 class PageEmployee extends React.Component{
@@ -30,11 +31,6 @@ class PageEmployee extends React.Component{
           }));
     }
 
-    UpdateList(){
-        fetch('http://localhost:3004/employees')
-            .then(responce=>responce.json())
-    }
-
     onClickSubmit=(event)=>{
         this.setState(()=>({
           isSaving:true
@@ -54,7 +50,7 @@ class PageEmployee extends React.Component{
         })
             .then(response => response.json())
             .then(() => this.setState(()=>({isSaving:false, addEvent:false})))
-            .then(() => this.UpdateList());
+            .then(() => this.props.history.push("/"));
               
     
         event.preventDefault();
@@ -102,4 +98,4 @@ class PageEmployee extends React.Component{
 }
 
 
-export default PageEmployee
+export default withRouter(PageEmployee)
